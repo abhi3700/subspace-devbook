@@ -22,6 +22,16 @@ Skipping wiping config, could not find the file...
 Wipe finished!
 ```
 
+Now, if we check the `pulsar` directory, we would see that the `node` and `farms` directories are deleted, except `settings.toml` file.
+
+```bash
+~/Library/Application Support/pulsar  
+❯ ls      
+settings.toml
+```
+
+This file can be deleted manually though. But, it's not necessary. In fact, this file would be deleted automatically when uninstalled let's say via `$ brew uninstall pulsar` (if installed via brew).
+
 ---
 
 Let's say you haven't run `$ pulsar init` and you want to wipe the config and summary files. Then, it won't be able to read the config file.
