@@ -64,9 +64,9 @@ impl Get<u128> for TotalSpacePledged {
 }
 ```
 
-## Farm
+## Farm/Plot
 
-A farm is a collection of sectors where each sector has N (max. 1000 in the [code](https://github.com/subspace/subspace/blob/8fff19cb8532f39fa670e13dd629c024350c8010/crates/subspace-runtime/src/lib.rs#L101-L102) for now) pieces, where each piece is of almost $\gtrapprox$ 1 MiB (Mebibyte = 2^20 bytes). The piece size is actually calculated as per this code:
+A farm/plot is a collection of sectors where each sector has N (max. 1000 in the [code](https://github.com/subspace/subspace/blob/8fff19cb8532f39fa670e13dd629c024350c8010/crates/subspace-runtime/src/lib.rs#L101-L102) for now) pieces, where each piece is of almost $\gtrapprox$ 1 MiB (Mebibyte = 2^20 bytes). The piece size is actually calculated as per this code:
 
 [Source code](https://github.com/subspace/subspace/blob/main/crates/subspace-core-primitives/src/pieces.rs#L801)
 
@@ -91,6 +91,16 @@ Here are the key takeaways:
 - A piece has size of $\gtrapprox$ 1 MiB
 - A sector has size of ~ 1.3 GB
 - A farm/plot has min. required size of 2 GB
+
+### Farming, Sectors & Pieces
+
+These are related to the consensus mechanism of the Subspace network, which is a storage-based blockchain system. Here's how they relate to each other:
+
+- **Farming**: Farming refers to the process of participating in the consensus mechanism by storing data and solving challenges based on the data stored. Farmers compete to solve these puzzles (i.e. submit proof of replication) and earn rewards. Farming involves maintaining plots on disk that contain sectors with pieces of blockchain history ([docs/consensus/consensus/farming.md](https://github.com/subspace/subnomicon/blob/626848b9e3f4e09e87ce8fb95985f61a935a0d83/docs/consensus/consensus/farming.md)).
+- **Sectors**: Sectors are subdivisions of a farmer's plot. They are equally-sized storage units on disk, currently around 1 GiB each, containing a pseudorandom selection of pieces ([docs/consensus/consensus/plotting.md](https://github.com/subspace/subnomicon/blob/626848b9e3f4e09e87ce8fb95985f61a935a0d83/docs/consensus/consensus/plotting.md)). A plot consists of multiple sectors.
+- **Pieces**: Pieces are the basic units of measurement in archived blockchain history. They consist of blockchain data (record), a KZG commitment, and a witness. Pieces are encoded and stored in sectors on a farmer's disk ([docs/consensus/consensus/archiving.md](https://github.com/subspace/subnomicon/blob/626848b9e3f4e09e87ce8fb95985f61a935a0d83/docs/consensus/consensus/archiving.md)).
+
+The relationship is as follows: farmers create plots on their storage devices, which are divided into sectors. Each sector contains a number of encoded pieces that represent parts of the blockchain's history. The farmers use these sectors and the pieces within them to participate in the farming process, which is central to the network's consensus mechanism.
 
 ## References
 
