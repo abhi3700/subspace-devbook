@@ -63,3 +63,21 @@ impl Get<u128> for TotalSpacePledged {
     }
 }
 ```
+
+## Farm
+
+A farm is a collection of sectors where each sector has 1000 pieces, where each piece is of almost ~ 1 MiB (Mebibyte = 2^20 bytes). It is actually calculated as per this code:
+
+```rust
+impl Piece {
+    pub const SIZE: usize = Record::SIZE + RecordCommitment::SIZE + RecordWitness::SIZE;
+}
+```
+
+![](assets/farm_sectors_pieces.png)
+
+Now, if a farm is of size 2 GB, then it should have sectors = 2GB / (1000 * 2^20) = 1.907... means 1 sector & 907 pieces.<br/>
+But, out of 2 GB, 1 full sector of size ~ 1 GiB is actually farmed. And rest includes metadata and some left over empty space.
+
+Q. By the way, the minimum farm size is set as `2 GB`. And why so? <br/>
+Because plot size < 2 GB  would not fit a full sector and some metadata. So, at least 2 GB plot/farm size is required.
