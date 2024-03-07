@@ -66,7 +66,9 @@ impl Get<u128> for TotalSpacePledged {
 
 ## Farm
 
-A farm is a collection of sectors where each sector has 1000 pieces, where each piece is of almost ~ 1 MiB (Mebibyte = 2^20 bytes). It is actually calculated as per this code:
+A farm is a collection of sectors where each sector has N (max. 1000 in the [code](https://github.com/subspace/subspace/blob/8fff19cb8532f39fa670e13dd629c024350c8010/crates/subspace-runtime/src/lib.rs#L101-L102) for now) pieces, where each piece is of almost $\gtrapprox$ 1 MiB (Mebibyte = 2^20 bytes). The piece size is actually calculated as per this code:
+
+[Source code](https://github.com/subspace/subspace/blob/main/crates/subspace-core-primitives/src/pieces.rs#L801)
 
 ```rust
 impl Piece {
@@ -74,10 +76,22 @@ impl Piece {
 }
 ```
 
+> We would use N = 1000 for calculation of no. of sectors below.
+
 ![](assets/farm_sectors_pieces.png)
 
 Now, if a farm is of size 2 GB, then it should have sectors = 2GB / (1000 * 2^20) = 1.907... means 1 sector & 907 pieces.<br/>
 But, out of 2 GB, 1 full sector of size ~ 1 GiB is actually farmed. And rest includes metadata and some left over empty space.
 
 Q. By the way, the minimum farm size is set as `2 GB`. And why so? <br/>
-Because plot size < 2 GB  would not fit a full sector and some metadata. So, at least 2 GB plot/farm size is required.
+Because a full sector + metadata would not fit into a plot < 2 GB. So, at least 2 GB plot/farm size is required.
+
+Here are the key takeaways:
+
+- A piece has size of $\gtrapprox$ 1 MiB
+- A sector has size of ~ 1.3 GB
+- A farm/plot has min. required size of 2 GB
+
+## References
+
+- [Subspace Dilithium Consensus Specification](https://subspacelabs.notion.site/Subspace-Dilithium-Consensus-Specification-v2-3-274a730b53eb4c93a8d879b90de532ce#24a718a13e434417a72ead964f073631)
