@@ -1,6 +1,8 @@
-# Configuration
+# Space Acres
 
 ## GUI
+
+### Config page
 
 ![](../assets/space_acres_config.png)
 

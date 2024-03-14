@@ -5,7 +5,9 @@
 - [Subspace Node](./node.md)
 - [Subspace Farmer](./farmer.md)
 - [Simple Example](./eg_simple.md)
-- [Pulsar](./pulsar/introduction.md)
+- [Space Acres](./space-acres/README.md)
+  - [Predict farmer's reward ETA](./space-acres/issue-86.md)
+- [Pulsar](./pulsar/introduction.md) [DEPRECATED]
   - [init](./pulsar/init.md)
   - [farm](./pulsar/farm.md)
   - [wipe](./pulsar/wipe.md)
