@@ -6,6 +6,13 @@
 
 ![](../assets/space_acres_config.png)
 
+### Running page
+
+![](../assets/space_acres_running.png)
+
+What is this for? <br/>
+TODO: Write answer...
+
 ## CLI
 
 For macOS, simply run:
