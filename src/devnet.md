@@ -218,3 +218,35 @@ Now, the block starts producing.
 Now, you can send a pallet tx to your subspace consensus chain using some CLI tool like `subxt` or script.
 
 Also, you can test the domain-1 i.e. Nova (EVM-based) chain by sending txs using CLI tool like `foundry` or script (Solidity, TS, Rust).
+
+## Explorer
+
+In order to find an EVM tx (sent to Nova EVM chain or domain-1), you just need to make the standard way of using `cast`/`forge`. And then when you receive a tx hash. Just get some details about the tx using `cast`:
+
+```sh
+❯ cast tx 0xc42b04d565ad5683c59a5b8ba6c1567485b6a8d913c065157f000cdb24ab517f --rpc-url $NOVA_RPC_URL
+
+blockHash            0xd9ae7b107f24942ef92c310c648f2031eb2c35e33316513785e41db9a24afb61
+blockNumber          5576
+from                 0xf24FF3a9CF04c71Dbc94D0b566f7A27B94566cac
+gas                  125000
+gasPrice             500000000
+hash                 0xc42b04d565ad5683c59a5b8ba6c1567485b6a8d913c065157f000cdb24ab517f
+input                0xaafea3120000000000000000000000000000000000000000000000000000000000009ce100000000000000000000000071d5a92a9056ab2ee81811af045439e059dd6fbc
+nonce                62
+r                    0x6d3dec4a4300183e7d8a46cc7b8b978fd3756049ff602fd3924e7d62f252312c
+s                    0x5a13810988d2852d8959250dd0cca228a39c8a4fc2d8ef45107a9d2ec0586408
+to                   0xb91C2eeaA0c475115069a6ED4bc601337a22788E
+transactionIndex     11
+v                    980036
+value                0
+creates              null
+```
+
+And then go to Nova explorer via PolkadotJS.
+
+And then search block 5576. After that look for tx at index 11. And then expand `ethereum.Executed` to know the details of the tx.
+
+![](assets/nova_polkadotjs_explorer_tx_details.png)
+
+Congrats! 🎉 You have done it.

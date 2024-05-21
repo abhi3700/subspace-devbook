@@ -4,6 +4,12 @@
 
 In the Subspace Dilithium Consensus Specification v2, `SolutionRange` is a parameter for the proof-of-replication challenge. It's initially set to a value defined by `INITIAL_SOLUTION_RANGE` for the first era. The `SolutionRange` is dynamically adjusted every era (defined by `ERA_DURATION_IN_BLOCKS`), based on the actual and expected blocks produced per era to maintain a consistent block production rate as the space pledged on the network changes. The new `SolutionRange` for an era is calculated as: `next_solution_range = max(min( era_slot_count / ERA_DURATION_IN_BLOCKS * SLOT_PROBABILITY, 4), 1/4) * current_solution_range`.
 
+The era is defined as `2016` blocks. So, the solution range changes every `2016` blocks.
+> ERA_DURATION_IN_BLOCKS = 2016. [Source](https://github.com/subspace/subspace/blob/5f6132956dc93dce079f66d8a3319627ae20a2f9/crates/subspace-runtime/src/lib.rs#L173-L174).
+
+To determine the next solution range, the average of the last 2016 blocks are considered. And then it's adjusted (increased or decreased) to ensure the block production rate is consistent (with 6 seconds per block) with the space pledged on the network.
+> This is pretty much like Bitcoin's difficulty level adjustment to keep the block production consistent with 10 mins per block.
+
 Here is the formula to calculate `SolutionRange` for a given no. of era & previous solution range value:
 
 `next_solution_range = max(min( era_slot_count / ERA_DURATION_IN_BLOCKS * SLOT_PROBABILITY, 4), 1/4) * current_solution_range`
@@ -63,6 +69,17 @@ impl Get<u128> for TotalSpacePledged {
     }
 }
 ```
+
+> FACT:
+> The total space pledged is actually not calculated as sum of all farms by all of the farmers in the network. It's calculated probabilistically by frequency with which blocks are produced.
+
+E.g: Consider a scenario with a single farmer who has pledged one sector consisting of `1000 pieces`, approximately `1 GiB`. We aim to produce a block every `6 seconds`, which implies that the farmer should have a `1/6 probability` per second of producing a block with one of his `1000 pieces`.
+
+This sets the threshold at`1/(6*1000) times the total possible solutions`.
+
+After observing for `2016 blocks`, we find that the farmer is producing blocks every `3 seconds`, rather than the desired `6 seconds`. To correct this, we need to halve the solution range and adjust our assumption to reflect that the farmer has actually pledged `2 GiB`.
+
+This process should be scaled accordingly with more farmers.
 
 ## Farm/Plot
 
