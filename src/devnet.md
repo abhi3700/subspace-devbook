@@ -60,7 +60,8 @@ $ ./subspace-node-macos-aarch64-gemini-3h-2024-may-06 domain key insert --domain
 ### 3. Start the node
 
 ```sh
-$ 2024-05-13T14:15:42.375012Z  INFO subspace_node::commands::run: 💾 Node path: ./subspace-node
+$ ./subspace-node-macos-aarch64-gemini-3h-2024-may-06 run --chain dev --farmer --timekeeper --base-path ./subspace-node --state-pruning archive-canonical --blocks-pruning 512  --rpc-cors all --force-synced --force-authoring -- --domain-id 1 --operator-id 1 --state-pruning archive-canonical --blocks-pruning 512  --rpc-cors all 
+2024-05-13T14:15:42.375012Z  INFO subspace_node::commands::run: 💾 Node path: ./subspace-node
 2024-05-13T14:15:42.796037Z  INFO Consensus: sc_service::client::client: 🔨 Initializing Genesis block/state (state: 0x5623…7c80, header-hash: 0x31ce…8015)
 2024-05-13T14:15:43.233581Z  INFO Consensus: subspace_networking::constructor: DSN instance configured. allow_non_global_addresses_in_dht=false peer_id=12D3KooWEvM9rD2unb5HDL2zJaStMcnBD8sYa91qVvhopxhi6h3g protocol_version=/subspace/2/31cee242859362151def6b3bb64fd609151d6b0a319879e8f7f23501e59f8015
 2024-05-13T14:15:43.236285Z  INFO Consensus: libp2p_swarm: local_peer_id=12D3KooWEvM9rD2unb5HDL2zJaStMcnBD8sYa91qVvhopxhi6h3g
